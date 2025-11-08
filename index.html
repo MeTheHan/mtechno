@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metehan - Teknoloji İçerikleri</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #2563eb;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2563eb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #3b82f6;
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #2563eb;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(30, 64, 175, 0.05) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.3s; }
+        .section:nth-child(3) { animation-delay: 0.5s; }
+        .section:nth-child(4) { animation-delay: 0.7s; }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #2563eb;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .content-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid #334155;
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px);
+            border-color: #2563eb;
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #3b82f6;
+        }
+
+        /* GIF Section */
+        .gif-section {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .gif-container {
+            display: inline-block;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gif-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.3);
+        }
+
+        .auto-gif {
+            width: 300px;
+            height: auto;
+            display: block;
+            pointer-events: none;
+        }
+
+        /* Subscribe Button */
+        .subscribe-section {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .subscribe-btn {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subscribe-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+        }
+
+        .subscribe-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .subscribe-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Redirect Overlay */
+        .redirect-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            flex-direction: column;
+        }
+
+        .redirect-content {
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        .redirect-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #2563eb;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #334155;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 2px solid #2563eb;
+            margin-top: 4rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-link {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #2563eb;
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Redirect Overlay -->
+    <div class="redirect-overlay" id="redirectOverlay">
+        <div class="redirect-content">
+            <h2>Teşekkürler. :)<br>Yönlendiriliyor...</h2>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Metehan</a>
+            <nav class="nav-links">
+                <a href="#about">Hakkımda</a>
+                <a href="#content">İçerikler</a>
+                <a href="#projects">Projeler</a>
+                <a href="#contact">İletişim</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Teknoloji İçerikleri</h1>
+            <p>Yazılımdan oyun geliştirmeye, herkesin anlayabileceği tutorial ve tanıtım içerikleri</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">Hakkımda</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Merhaba, Ben Metehan</h3>
+                    <p>2025 itibarıyla aktif bir öğrenciyim ve teknoloji dünyasında kendimi sürekli geliştiriyorum. Yazılım ve içerik üretimi benim için bir tutku.</p>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Hedefim</h3>
+                    <p>Bilgisayar Mühendisliği kariyerime sağlam bir temelle başlamak ve gerçek dünya problemlerine çözümler üreten projeler geliştirmek.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="section" id="content">
+        <div class="container">
+            <h2 class="section-title">İçerik Filosofisi</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Herkes İçin Erişilebilir</h3>
+                    <p>İçeriklerim genel kitleye hitap ediyor. İster deneyimli olun ister yeni başlayın, herkesin anlayabileceği şekilde hazırlıyorum.</p>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Zamansız Değer</h3>
+                    <p>Videolarım senelerce kanalımda kalsa bile, her zaman yardıma ihtiyacı olanlar için hazır bulunsun istiyorum.</p>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Pratik Çözümler</h3>
+                    <p>Kısa yazıyla anlatılabilecek konuları bile detaylı videolarla açıklayarak kalıcı öğrenme sağlıyorum.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIF Section -->
+    <section class="gif-section">
+        <div class="container">
+            <div class="gif-container" onclick="redirectToChannel()">
+                <img src="IMG_5290.gif" class="auto-gif" alt="Teknoloji GIF">
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title">Gelecek Projeler</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3 class="card-title">Oyun Tanıtımları</h3>
+                    <p>Kendi geliştirdiğim oyunların tanıtım ve behind-the-scenes içerikleri.</p>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Tutorial'lar</h3>
+                    <p>Her seviyeye uygun, adım adım anlatımlı eğitim videoları.</p>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-title">Canlı Yayınlar</h3>
+                    <p>Kodlama süreçleri ve oyun geliştirme canlı yayınları.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscribe Section -->
+    <section class="subscribe-section">
+        <div class="container">
+            <button class="subscribe-btn" onclick="redirectToChannel()">
+                YouTube Kanalıma Abone Ol
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://youtube.com/@mtechnow" class="social-link" target="_blank">YouTube</a>
+            </div>
+            <p>&copy; 2024 Metehan. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script>
+        function redirectToChannel() {
+            const overlay = document.getElementById('redirectOverlay');
+            overlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                window.location.href = 'https://youtube.com/@mtechnow';
+            }, 3000);
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
